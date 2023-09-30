@@ -1,7 +1,9 @@
-from flask import Flask, render_template, session, redirect
+from flask import Flask, render_template, session, redirect, request
 from functools import wraps
 from datetime import datetime
 from pymongo.mongo_client import MongoClient
+import calendar
+
 
 
 
@@ -34,15 +36,14 @@ client.close()
 def index():
     return render_template("index.html")
 
-@app.get("/dashboard")
+@app.route("/dashboard/")
+@app.route("/dashboard/<month>/<year>")
 @login_required
-def dashboard():
-    currentMonth = datetime.now().month
-    currentYear = datetime.now().year
-    current_items_expenses = list(db.payments.find({"date":str(currentMonth) +"-"+str(currentYear), 
+def dashboard(month=datetime.now().month, year=datetime.now().year):
+    current_items_expenses = list(db.payments.find({"date":str(month) +"-"+str(year), 
                                            "user_id": session["user"]["_id"]}))
-    current_items_income = list(db.income.find({"date":str(currentMonth) +"-"+str(currentYear), 
+    current_items_income = list(db.income.find({"date":str(month) +"-"+str(year), 
                                            "user_id": session["user"]["_id"]}))
-    return render_template("dashboard.html", current_items_expenses=current_items_expenses, current_items_income=current_items_income, current_month=datetime.now().strftime("%B"), current_year=str(currentYear))
-
+    print("Month: ", month)
+    return render_template("dashboard.html", current_items_expenses=current_items_expenses, current_items_income=current_items_income, current_month=calendar.month_name[int(month)], current_year=year)
 

@@ -1,3 +1,54 @@
+/* Nav Bar */
+
+.signout{
+    float:right;
+    padding-right: 2%;
+}
+
+.user-info{
+    padding-left: 85%;
+}
+
+/* Top Heading */
+.heading{
+    text-align: center;
+    padding-top: 50px;
+}
+
+.heading-text{
+    padding-top: 10px;
+}
+
+.arrow{
+    max-width: 20%;
+    height: auto;
+    opacity: 0.8;
+    /* padding-bottom: 70px; */
+
+}
+
+.arrow:hover{
+    opacity: 0.5;
+}
+
+.right-arrow{
+    float: right;
+}
+
+.left-arrow{
+    float: left;
+    transform: rotateY(180deg);
+}
+
+li{
+    display: inline-block;
+}
+/* tables */
+.expenses-table{
+    padding-left: 5%;
+    padding-top: 20px;
+}
+
 .center-cards{
     margin:20% 20%
 }

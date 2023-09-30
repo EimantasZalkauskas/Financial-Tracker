@@ -3,6 +3,7 @@ from passlib.hash import pbkdf2_sha256
 from datetime import datetime
 from collections import defaultdict
 import uuid
+import calendar
 
 from app import client
 db = client["financial-tracker"]
@@ -56,9 +57,7 @@ class User:
     #Methods for processing data
     #
     #Save Methods
-    def save_expense(self, name, type, amount):
-        currentMonth = datetime.now().month
-        currentYear = datetime.now().year
+    def save_expense(self, name, type, amount, month, year):
         print(name, type, amount)
         print(session["user"]["_id"])
 
@@ -68,22 +67,20 @@ class User:
             "name": name,
             "type": type,
             "amount": amount,
-            "date": str(currentMonth) +"-"+str(currentYear)
+            "date": str(month) +"-"+str(year)
         }
 
         #print(expense)
 
         db.payments.insert_one(expense)
 
-        current_items = list(db.payments.find({"date":str(currentMonth) +"-"+str(currentYear), 
+        current_items = list(db.payments.find({"date":str(month) +"-"+str(year), 
                                                "user_id": session["user"]["_id"]}))
 
         print(current_items)
-        return redirect("/dashboard")
+        return redirect(url_for("dashboard", month=month, year=year))
     
-    def save_income(self, name, type, amount):
-        currentMonth = datetime.now().month
-        currentYear = datetime.now().year
+    def save_income(self, name, type, amount, month, year):
         print(name, type, amount)
         print(session["user"]["_id"])
 
@@ -93,17 +90,17 @@ class User:
             "name": name,
             "type": type,
             "amount": amount,
-            "date": str(currentMonth) +"-"+str(currentYear)
+            "date": str(month) +"-"+str(year)
         }
 
-
+        print(income)
         db.income.insert_one(income)
 
-        current_items = list(db.income.find({"date":str(currentMonth) +"-"+str(currentYear), 
+        current_items = list(db.income.find({"date":str(month) +"-"+str(year), 
                                                "user_id": session["user"]["_id"]}))
 
         print(current_items)
-        return redirect("/dashboard")
+        return redirect(url_for("dashboard", month=month, year=year))
     #Delete
     def delete_item_payment(self, name, type, amount, date):
         db.payments.find_one_and_delete({"name":name,
@@ -157,4 +154,3 @@ class User:
                 pairs[item["type"]] = item["amount"]
         return pairs
             
-                

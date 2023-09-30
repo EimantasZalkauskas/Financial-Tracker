@@ -57,6 +57,32 @@ function addRowExpenses() {
     }
 }
 
+$("form[name=expenses]").submit(function (event) {
+  var name = jQuery('input[name="ExpensesName"]').val();
+  var type = jQuery('select[name="ExpensesType"]').val();
+  var amount = jQuery('input[name="ExpensesAmount"]').val();
+  var month = $("h1").eq(0).text();
+  var year = $("h1").eq(1).text();
+  var num_month = getMonthFromString(month);
+
+$.ajax({
+  url: "/user/expenses/submit",
+    type: "POST",
+    data: {"name":name,
+          "type":type,
+          "amount":amount,
+          "month":num_month,
+          "year":year},
+  success: function(resp) {
+  window.location.href = "/dashboard/"+num_month+"/"+year;
+},
+  error: function (resp){
+}
+});
+
+event.preventDefault();
+});
+
 function deleteRowExpenses(btn) {
   var row = btn.parentNode.parentNode;
   row.parentNode.removeChild(row);
@@ -87,7 +113,7 @@ function deleteRowExpenses(btn) {
 
     delay(200).then(() => {
       //ProcessChartExpenses();
-      window.location.href = "/dashboard";
+      window.location.href = "/dashboard/"+num_month+"/"+year;
     });
       
 }
@@ -142,7 +168,6 @@ function ProcessChartExpenses() {
       data: {"date":date},
       dataType: "json",
     }).done(function(data) {
-      console.log(data);
       removeData(expensesPieChart);
       for (const [key, value] of Object.entries(data)) {
         addData(expensesPieChart, key, value);
@@ -151,23 +176,6 @@ function ProcessChartExpenses() {
     });
   }
 }
-
-function addData(chart, label, newData) {
-  chart.data.labels.push(label);
-  chart.data.datasets.forEach((dataset) => {
-      dataset.data.push(newData);
-  });
-  chart.update();
-}
-
-function removeData(chart) {
-  chart.data.labels.pop();
-  chart.data.datasets.forEach((dataset) => {
-      dataset.data.pop();
-  });
-  chart.update();
-}
-
 
 
 // Income Table
@@ -181,6 +189,32 @@ function addRowIncome() {
 
       }
 }
+
+$("form[name=income]").submit(function (event) {
+  var name = jQuery('input[name="IncomeName"]').val();
+  var type = jQuery('select[name="IncomeType"]').val();
+  var amount = jQuery('input[name="IncomeAmount"]').val();
+  var month = $("h1").eq(0).text();
+  var year = $("h1").eq(1).text();
+  var num_month = getMonthFromString(month);
+
+$.ajax({
+  url: "/user/income/submit",
+    type: "POST",
+    data: {"name":name,
+          "type":type,
+          "amount":amount,
+          "month":num_month,
+          "year":year},
+  success: function(resp) {
+  window.location.href = "/dashboard/"+num_month+"/"+year;
+},
+  error: function (resp){
+}
+});
+
+event.preventDefault();
+});
 
 function deleteRowIncome(btn) {
 var row = btn.parentNode.parentNode;
@@ -212,7 +246,7 @@ $.ajax({
 
   delay(200).then(() => {
     //ProcessChartExpenses();
-    window.location.href = "/dashboard";
+    window.location.href = "/dashboard/"+num_month+"/"+year;
 
 
 });
@@ -271,7 +305,6 @@ function ProcessChartIncome() {
       data: {"date":date},
       dataType: "json",
     }).done(function(data) {
-      console.log(data);
       removeData(incomePieChart)
       
       for (const [key, value] of Object.entries(data)) {
@@ -283,6 +316,46 @@ function ProcessChartIncome() {
 }
 
 
+// Arrow Methods
+
+function nextArrow(){
+    var month = $("h1").eq(0).text();
+    var year = parseInt($("h1").eq(1).text());
+    var num_month = getMonthFromString(month);
+    if(num_month == 12){
+      year += 1
+      num_month = 1
+    }else{
+      num_month += 1
+    }
+    $.ajax({
+      type: "GET",
+      url: '/dashboard/' + num_month + '/' + year
+    })
+      .done(function(resp){
+        window.location.href = '/dashboard/' + num_month + '/' + year;
+      })
+  }
+
+  function backArrow(){
+    var month = $("h1").eq(0).text();
+    var year = parseInt($("h1").eq(1).text());
+    var num_month = getMonthFromString(month);
+    if(num_month == 1){
+      year -= 1
+      num_month = 12
+    }else{
+      num_month -= 1
+    }
+    $.ajax({
+      type: "GET",
+      url: '/dashboard/' + num_month + '/' + year
+    })
+      .done(function(resp){
+        window.location.href = '/dashboard/' + num_month + '/' + year;
+      })
+  }
+
 // Other Dashboard Methods
 
 function getMonthFromString(mon){
@@ -292,4 +365,20 @@ function getMonthFromString(mon){
      return new Date(d).getMonth() + 1;
   }
   return -1;
+}
+
+function addData(chart, label, newData) {
+  chart.data.labels.push(label);
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.push(newData);
+  });
+  chart.update();
+}
+
+function removeData(chart) {
+  chart.data.labels.pop();
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.pop();
+  });
+  chart.update();
 }
