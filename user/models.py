@@ -78,9 +78,41 @@ class User:
         print(current_items)
         return redirect("/dashboard")
     
-    def delete_items(self, name, type, amount, date):
+    def save_income(self, name, type, amount):
+        currentMonth = datetime.now().month
+        currentYear = datetime.now().year
+        print(name, type, amount)
+        print(session["user"]["_id"])
 
+        income = {
+            "_id": uuid.uuid4().hex,
+            "user_id": session["user"]["_id"],
+            "name": name,
+            "type": type,
+            "amount": amount,
+            "date": str(currentMonth) +"-"+str(currentYear)
+        }
+
+
+        db.income.insert_one(income)
+
+        current_items = list(db.income.find({"date":str(currentMonth) +"-"+str(currentYear), 
+                                               "user_id": session["user"]["_id"]}))
+
+        print(current_items)
+        return redirect("/dashboard")
+    
+    def delete_item_payment(self, name, type, amount, date):
         db.payments.find_one_and_delete({"name":name,
+                                        "type":type,
+                                        "amount":amount,
+                                        "date":date,
+                                        "user_id":session["user"]["_id"]})
+        
+        return redirect("/dashboard")
+
+    def delete_item_income(self, name, type, amount, date):
+        db.income.find_one_and_delete({"name":name,
                                         "type":type,
                                         "amount":amount,
                                         "date":date,

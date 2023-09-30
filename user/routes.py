@@ -16,16 +16,31 @@ def login():
     return User().login()
 
 @app.route("/user/expenses/submit", methods=["POST"])
-def save_input():
-    name = request.form.get("Name")
-    type = request.form.get("Type")
-    amount = request.form.get("Amount")
+def save_input_expenses():
+    name = request.form.get("ExpensesName")
+    type = request.form.get("ExpensesType")
+    amount = request.form.get("ExpensesAmount")
     return User().save_expense(name, type, amount)
 
+@app.route("/user/income/submit", methods=["POST"])
+def save_input_income():
+    name = request.form.get("IncomeName")
+    type = request.form.get("IncomeType")
+    amount = request.form.get("IncomeAmount")
+    return User().save_income(name, type, amount)
+
 @app.route("/user/expense/delete", methods=["POST"])
-def del_inputs():
+def del_input_expense():
     name = request.form.get("name")
     type = request.form.get("type")
     amount = request.form.get("amount")
     date = request.form.get("date")
-    return User().delete_items(name, type, amount, date)
+    return User().delete_item_payment(name, type, amount, date)
+
+@app.route("/user/income/delete", methods=["POST"])
+def del_input_income():
+    name = request.form.get("name")
+    type = request.form.get("type")
+    amount = request.form.get("amount")
+    date = request.form.get("date")
+    return User().delete_item_income(name, type, amount, date)

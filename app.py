@@ -39,8 +39,10 @@ def index():
 def dashboard():
     currentMonth = datetime.now().month
     currentYear = datetime.now().year
-    current_items = list(db.payments.find({"date":str(currentMonth) +"-"+str(currentYear), 
+    current_items_expenses = list(db.payments.find({"date":str(currentMonth) +"-"+str(currentYear), 
                                            "user_id": session["user"]["_id"]}))
-    return render_template("dashboard.html", current_items=current_items, current_month=datetime.now().strftime("%B"), current_year=str(currentYear))
+    current_items_income = list(db.income.find({"date":str(currentMonth) +"-"+str(currentYear), 
+                                           "user_id": session["user"]["_id"]}))
+    return render_template("dashboard.html", current_items_expenses=current_items_expenses, current_items_income=current_items_income, current_month=datetime.now().strftime("%B"), current_year=str(currentYear))
 
 
