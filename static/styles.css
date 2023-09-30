@@ -9,3 +9,50 @@
 .login-button{
     margin-top: 60px;
 }
+
+.center{
+    padding-left: 25%;
+}
+
+.table{
+    padding-left: 5%;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
+.btn-circle.btn-xl {
+    width: 40px;
+    height: 40px;
+    padding: 10px 2px 13px 2px;
+    border-radius: 35px;
+    font-size: 30px;
+    line-height: 0.1;
+}
+
+.one-by-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
+  }
+  
+  .one-by-two .item {
+    height: 100px;
+  }
+
+.rounded {
+    border-radius: 1rem;
+  }
+  
+  .position-center {
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }

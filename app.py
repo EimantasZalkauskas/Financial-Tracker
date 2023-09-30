@@ -1,5 +1,6 @@
 from flask import Flask, render_template, session, redirect
 from functools import wraps
+from datetime import datetime
 from pymongo.mongo_client import MongoClient
 
 
@@ -28,6 +29,7 @@ def login_required(f):
     return wrap
 
 client.close()
+#Main Routes
 @app.get("/")
 def index():
     return render_template("index.html")
@@ -35,4 +37,12 @@ def index():
 @app.get("/dashboard")
 @login_required
 def dashboard():
-    return render_template("dashboard.html")
+    currentMonth = datetime.now().month
+    currentYear = datetime.now().year
+    current_items_expenses = list(db.payments.find({"date":str(currentMonth) +"-"+str(currentYear), 
+                                           "user_id": session["user"]["_id"]}))
+    current_items_income = list(db.income.find({"date":str(currentMonth) +"-"+str(currentYear), 
+                                           "user_id": session["user"]["_id"]}))
+    return render_template("dashboard.html", current_items_expenses=current_items_expenses, current_items_income=current_items_income, current_month=datetime.now().strftime("%B"), current_year=str(currentYear))
+
+

@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="static/styles.css">
     <title>Financial Tracker</title>
 </head>
-<body>
+<body onload="ProcessChartExpenses();ProcessChartIncome();">
 
     {% block content %}
 
     {% endblock %}
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script type="text/javascript" src="static/js/jquery.js"></script>
     <script type="text/javascript" src="static/js/scripts.js"></script>
 </body>
