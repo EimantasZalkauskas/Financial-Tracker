@@ -1,5 +1,6 @@
-from flask import jsonify, request, redirect, session
+from flask import jsonify, request, redirect, session, render_template,url_for
 from passlib.hash import pbkdf2_sha256
+from datetime import datetime
 import uuid
 
 from app import client
@@ -30,7 +31,6 @@ class User:
 
         user = {
             "_id": uuid.uuid4().hex,
-            "name": request.form.get("name"),
             "email": request.form.get("email"),
             "password": request.form.get("password")
         }
@@ -51,3 +51,39 @@ class User:
     def signout(self):
         session.clear()
         return redirect("/")
+
+    #Methods for processing data
+    def save_expense(self, name, type, amount):
+        currentMonth = datetime.now().month
+        currentYear = datetime.now().year
+        print(name, type, amount)
+        print(session["user"]["_id"])
+
+        expense = {
+            "_id": uuid.uuid4().hex,
+            "user_id": session["user"]["_id"],
+            "name": name,
+            "type": type,
+            "amount": amount,
+            "date": str(currentMonth) +"-"+str(currentYear)
+        }
+
+        #print(expense)
+
+        db.payments.insert_one(expense)
+
+        current_items = list(db.payments.find({"date":str(currentMonth) +"-"+str(currentYear), 
+                                               "user_id": session["user"]["_id"]}))
+
+        print(current_items)
+        return redirect("/dashboard")
+    
+    def delete_items(self, name, type, amount, date):
+
+        db.payments.find_one_and_delete({"name":name,
+                                        "type":type,
+                                        "amount":amount,
+                                        "date":date,
+                                        "user_id":session["user"]["_id"]})
+        
+        return redirect("/dashboard")
