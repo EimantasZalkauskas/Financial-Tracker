@@ -1,6 +1,7 @@
 from flask import jsonify, request, redirect, session, render_template,url_for
 from passlib.hash import pbkdf2_sha256
 from datetime import datetime
+from collections import defaultdict
 import uuid
 
 from app import client
@@ -53,6 +54,8 @@ class User:
         return redirect("/")
 
     #Methods for processing data
+    #
+    #Save Methods
     def save_expense(self, name, type, amount):
         currentMonth = datetime.now().month
         currentYear = datetime.now().year
@@ -101,7 +104,7 @@ class User:
 
         print(current_items)
         return redirect("/dashboard")
-    
+    #Delete
     def delete_item_payment(self, name, type, amount, date):
         db.payments.find_one_and_delete({"name":name,
                                         "type":type,
@@ -119,3 +122,39 @@ class User:
                                         "user_id":session["user"]["_id"]})
         
         return redirect("/dashboard")
+    
+    #Get Methods
+    def get_expenses(self, date):
+        current_items = list(db.payments.find({"date":date, 
+                                               "user_id": session["user"]["_id"]}, 
+                                               {"type": 1,
+                                                "amount": 1,
+                                                "_id": 0}))
+        
+        items = self.conbime_items_arr(current_items)
+
+        return items
+    
+    def get_income(self, date):
+        current_items = list(db.income.find({"date":date, 
+                                               "user_id": session["user"]["_id"]}, 
+                                               {"type": 1,
+                                                "amount": 1,
+                                                "_id": 0}))
+        
+        items = self.conbime_items_arr(current_items)
+
+        return items
+    
+    def conbime_items_arr(self, current_items):
+        pairs = {}
+        for item in current_items:
+            
+            if item["type"] in pairs:
+                current_amount = pairs[item["type"]]
+                pairs[item["type"]] = int(item["amount"]) + int(current_amount)
+            else:
+                pairs[item["type"]] = item["amount"]
+        return pairs
+            
+                

@@ -41,6 +41,11 @@ $.ajax({
 event.preventDefault();
 });
 
+
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
+
 // Expenses Tables
 function addRowExpenses() {
     var name = jQuery('input[name="ExpensesName"]').val();
@@ -76,61 +81,94 @@ function deleteRowExpenses(btn) {
           "type":data[1],
           "amount":data[2],
           "date":date},
-    dataType: "json",
-    success: function(resp) {
-    // window.location.href = "/dashboard";
+    dataType: "json"
+    }).done(function (resp){
+    });
 
-  },
-    error: function (resp){
-    
-  }
-  });
+    delay(200).then(() => {
+      //ProcessChartExpenses();
+      window.location.href = "/dashboard";
+    });
+      
 }
 
-var ctx6 = document.getElementById("pieChart6");
-var pieChart6 = new Chart(ctx6, {
+var ctx6 = document.getElementById("expensesPieChart");
+var expensesPieChart = new Chart(ctx6, {
     type: 'pie',
     options: {
         rotation: -20,
-        cutoutPercentage: 10,
+        cutoutPercentage: 50,
         animation: {
             animateScale: true,
-        },
-        legend: {
-            position: 'left',
-            borderAlign: 'inner',
-            labels: {
-                boxWidth: 10,
-                fontStyle: 'italic',
-                fontColor: '#aaa',
-                usePointStyle: true,
-            }
         },
     },
     data: {
         labels: [
-            "First",
-            "Second",
+
         ],
         datasets: [
             {
-                data: [300, 120],
-                borderWidth: 2,
+                data: [],
+                borderWidth: 1,
                 backgroundColor: [
                     'rgba(70, 215, 212, 0.2)',
                     "rgba(245, 225, 50, 0.2)",
+                    "rgba(2, 225, 50, 0.2)"
                 ],
                 borderColor: [
                     '#46d8d5',
                     "#f5e132",
+                    "#3fe132"
                 ],
                 hoverBackgroundColor: [
                     '#46d8d5',
                     "#f5e132",
+                    "#3fe132"
                 ]
             }]
         }
     });
+
+
+function ProcessChartExpenses() {
+  if(document.URL.toString().includes("dashboard")){
+    var month = $("h1").eq(0).text();
+    var year = $("h1").eq(1).text();
+    var num_month = getMonthFromString(month);
+    var date = num_month.toString() + "-" + year.toString();
+    $.ajax({
+      type: "POST",
+      url: "/user/get/expenses",
+      data: {"date":date},
+      dataType: "json",
+    }).done(function(data) {
+      console.log(data);
+      removeData(expensesPieChart);
+      for (const [key, value] of Object.entries(data)) {
+        addData(expensesPieChart, key, value);
+      }
+      
+    });
+  }
+}
+
+function addData(chart, label, newData) {
+  chart.data.labels.push(label);
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.push(newData);
+  });
+  chart.update();
+}
+
+function removeData(chart) {
+  chart.data.labels.pop();
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.pop();
+  });
+  chart.update();
+}
+
+
 
 // Income Table
 function addRowIncome() {
@@ -140,7 +178,8 @@ function addRowIncome() {
 
   if (name != "" && type != " " && amount != ""){
     $('#IncomeTable').append('<tr><td><input type="text" name="IncomeName" class="form-control" required></td><td><select class="form-select" name="IncomeType" aria-label="Payment Type" required><option ></option><option value="Salary">Salary</option><option value="Side Hustle">Side Hustle</option><option value="Second Job">Second Job</option><option value="Other">Other</option></select></td><td><input type="number" name="IncomeAmount" class="form-control" required></td><td><input type="button" value="X" class="btn btn-danger btn-circle" onclick="deleteRowIncome(this)"/></td></tr>');
-  }
+
+      }
 }
 
 function deleteRowIncome(btn) {
@@ -167,16 +206,82 @@ $.ajax({
         "type":data[1],
         "amount":data[2],
         "date":date},
-  dataType: "json",
-  success: function(resp) {
-  // window.location.href = "/dashboard";
+  dataType: "json"
+    }).done(function (resp){
+      });
 
-},
-  error: function (resp){
-  
-}
+  delay(200).then(() => {
+    //ProcessChartExpenses();
+    window.location.href = "/dashboard";
+
+
 });
 }
+
+var ctx6 = document.getElementById("incomePieChart");
+var incomePieChart = new Chart(ctx6, {
+    type: 'pie',
+    options: {
+        rotation: -20,
+        cutoutPercentage: 50,
+        animation: {
+            animateScale: true,
+        },
+    },
+    data: {
+        labels: [
+
+        ],
+        datasets: [
+            {
+                data: [],
+                borderWidth: 1,
+                backgroundColor: [
+                    'rgba(70, 215, 212, 0.2)',
+                    "rgba(245, 225, 50, 0.2)",
+                    "rgba(2, 225, 50, 0.2)",
+                    "rgba(2, 55, 50, 0.2)",
+                ],
+                borderColor: [
+                    '#46d8d5',
+                    "#f5e132",
+                    "#3fe132",
+                    "#18a132"
+                ],
+                hoverBackgroundColor: [
+                    '#46d8d5',
+                    "#f5e132",
+                    "#3fe132",
+                    "#18a132"
+                ]
+            }]
+        }
+    });
+
+
+function ProcessChartIncome() {
+  if(document.URL.toString().includes("dashboard")){
+    var month = $("h1").eq(0).text();
+    var year = $("h1").eq(1).text();
+    var num_month = getMonthFromString(month);
+    var date = num_month.toString() + "-" + year.toString();
+    $.ajax({
+      type: "POST",
+      url: "/user/get/income",
+      data: {"date":date},
+      dataType: "json",
+    }).done(function(data) {
+      console.log(data);
+      removeData(incomePieChart)
+      
+      for (const [key, value] of Object.entries(data)) {
+        addData(incomePieChart, key, value);
+      }
+      
+    });
+  }
+}
+
 
 // Other Dashboard Methods
 

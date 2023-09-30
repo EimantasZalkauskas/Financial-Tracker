@@ -2,7 +2,7 @@ from flask import Flask, request
 from app import app
 from user.models import User
 
-
+#Signup
 @app.route("/user/signup", methods=["GET","POST"])
 def signup():
     return User().signup()
@@ -10,11 +10,12 @@ def signup():
 @app.route("/user/signout", methods=["GET","POST"])
 def signout():
     return User().signout()
-
+#Login
 @app.route("/user/login", methods=["GET","POST"])
 def login():
     return User().login()
 
+#Submit
 @app.route("/user/expenses/submit", methods=["POST"])
 def save_input_expenses():
     name = request.form.get("ExpensesName")
@@ -28,7 +29,7 @@ def save_input_income():
     type = request.form.get("IncomeType")
     amount = request.form.get("IncomeAmount")
     return User().save_income(name, type, amount)
-
+#Delete
 @app.route("/user/expense/delete", methods=["POST"])
 def del_input_expense():
     name = request.form.get("name")
@@ -44,3 +45,14 @@ def del_input_income():
     amount = request.form.get("amount")
     date = request.form.get("date")
     return User().delete_item_income(name, type, amount, date)
+
+#Get
+@app.route("/user/get/expenses", methods=["POST"])
+def get_expenses():
+    date = request.form.get("date")
+    return User().get_expenses(date)
+
+@app.route("/user/get/income", methods=["POST"])
+def get_income():
+    date = request.form.get("date")
+    return User().get_income(date)

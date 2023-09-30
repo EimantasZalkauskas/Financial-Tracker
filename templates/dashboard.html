@@ -24,9 +24,9 @@
 
 <!-- Expenses Table Div -->
 
-<div class="container" style="padding-top:50px;">
+<div class="container-fluid" style="padding-top:6%;" id="firstRow">
   <div class="row">
-    <div class="col">
+    <div class="col" style="padding-left: 5%;padding-top: 50px;">
       <!-- Table Headers -->
       <h3>Expenses</h3>
       <table id="expensesTable" class="table">
@@ -38,6 +38,7 @@
         </tr>
         <!-- Processing existing values -->
         {% if current_items_expenses != null %}
+          
             <tr>
           {% for item in current_items_expenses %}
           
@@ -80,10 +81,12 @@
         <button type="submit" class="btn btn-primary btn-circle btn-xl" onclick="addRowExpenses()">+</button>
       </form>
     </div>
-    <!-- Div for Pie Chart -->
-    <div class="col">
-      <canvas id="pieChart6"></canvas>
 
+    <!-- Div for Pie Chart -->
+    <div class="col center">
+      <div class="chart-container" style=" height:22vh; width:22vw">
+        <canvas id="expensesPieChart"></canvas>
+      </div>
       </div>
     </div>
   </div>
@@ -91,9 +94,9 @@
 
 <!-- Income Table Div -->
 
-<div class="container" style="padding-top:50px;">
+<div class="container-fluid" style="padding-top:8%;">
   <div class="row">
-    <div class="col">
+    <div class="col" style="padding-left: 5%;padding-top: 50px;">
       <!-- Table Headers -->
       <h3>Income</h3>
       <table id="incomeTable" class="table">
@@ -149,8 +152,10 @@
       </form>
     </div>
     <!-- Div for Pie Chart -->
-    <div class="col">
-
+    <div class="col center">
+      <div class="chart-container" style=" height:22vh; width:22vw">
+        <canvas id="incomePieChart"></canvas>
+      </div>
     </div>
   </div>
 </div>
