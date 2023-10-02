@@ -131,3 +131,15 @@ li{
 .bar-chart {
     padding-top: 7%;
 }
+
+
+/* Dashboard */
+
+.dashboard-middle-section-padding{
+    padding-top: 7%;
+}
+
+.precent-padding{
+    padding-top: 3%;
+    padding-bottom: 4%;
+}

@@ -80,9 +80,23 @@
         <button type="submit" class="btn btn-primary btn-circle btn-xl" onclick="addRowExpenses()">+</button>
       </form>
     </div>
-
+    <!-- Col for % -->
+    <div class="col-sm-3 text-center dashboard-middle-section-padding">
+      <div class="row-cols-1" style="display:none;">
+        <h4>Needs</h4>
+        <h4 class="precent-padding" id="Needs"></h4>
+      </div>
+      <div class="row-cols-1" style="display:none;">
+        <h4>Wants</h4>
+        <h4 class="precent-padding" id="Wants"></h4>
+      </div>
+      <div class="row-cols-1" style="display:none;">
+        <h4>Savings</h4>
+        <h4 class="precent-padding" id="Savings"></h4>
+      </div>
+    </div>
     <!-- Div for Pie Chart -->
-    <div class="col center pie-chart">
+    <div class="col  pie-chart">
       <div class="chart-container" style=" height:22vh; width:22vw">
         <canvas id="expensesPieChart"></canvas>
       </div>
@@ -150,8 +164,27 @@
         <button type="submit" class="btn btn-primary btn-circle btn-xl" onclick="addRowIncome()">+</button>
       </form>
     </div>
+    <!-- Col for % -->
+    <div class="col-sm-3 text-center dashboard-middle-section-padding">
+      <div class="row-cols-1" style="display:none;">
+        <h4>Salary</h4>
+        <h4 class="precent-padding" id="Salary"></h4>
+      </div>
+      <div class="row-cols-1" style="display:none;">
+        <h4>Side Hustle</h4>
+        <h4 class="precent-padding" id="SideHustle"></h4>
+      </div>
+      <div class="row-cols-1" style="display:none;">
+        <h4>Second Job</h4>
+        <h4 class="precent-padding" id="SecondJob"></h4>
+      </div>
+      <div class="row-cols-1" style="display:none;">
+        <h4>Other</h4>
+        <h4 class="precent-padding" id="Other"></h4>
+      </div>
+    </div>
     <!-- Div for Pie Chart -->
-    <div class="col center pie-chart">
+    <div class="col pie-chart">
       <div class="chart-container" style=" height:22vh; width:22vw">
         <canvas id="incomePieChart"></canvas>
       </div>

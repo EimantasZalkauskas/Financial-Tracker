@@ -210,7 +210,7 @@ function deleteRowExpenses(btn) {
 var expensesPieChart = new Chart(document.getElementById("expensesPieChart"), {
     type: 'pie',
     options: {
-        legend: { display: false },
+        legend: { display: true },
         rotation: -20,
         cutoutPercentage: 50,
         animation: {
@@ -274,7 +274,9 @@ function ProcessChartExpenses() {
         total += parseInt(value);
       }
       addTotal(expensesPieChart, total);
-      
+      for (const [key, value] of Object.entries(data)) {
+        percentage(parseInt(value), total, key);
+      }
     });
   }
 }
@@ -357,7 +359,7 @@ $.ajax({
 var incomePieChart = new Chart(document.getElementById("incomePieChart"), {
     type: 'pie',
     options: {
-        legend: { display: false },
+        legend: { display: true },
         rotation: -20,
         cutoutPercentage: 50,
         animation: {
@@ -417,11 +419,15 @@ function ProcessChartIncome() {
       data: {"date":date},
       dataType: "json",
     }).done(function(data) {
+      console.log(data);
       removeData(incomePieChart)
       var total = 0;
       for (const [key, value] of Object.entries(data)) {
         addData(incomePieChart, key, value);
         total += parseInt(value);
+      }
+      for (const [key, value] of Object.entries(data)) {
+        percentage(parseInt(value), total, key);
       }
       addTotal(incomePieChart, total);
       
@@ -519,3 +525,10 @@ function incramentPlusOneToDate(month, year, range){
   }
   return value_arr.reverse();
 }
+
+function percentage(partialValue, totalValue, key) {
+  key = key.replace(/\s/g, '');
+  current =  (100 * partialValue) / totalValue;
+  $("#"+key).html(Math.round(current)+"%");
+  $("#"+key).parent().css("display", "block");
+} 

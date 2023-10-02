@@ -6,15 +6,36 @@
 
 <div class="container-fluid" onload="ProcessBarChartExpenses();">
     <div class="text-center">
-        <h1 class="heading">Summary</h1>
+        <h1 class="heading" id="summary-date-range">Summary</h1>
     </div>
     <div class="row">
         <!-- User Info Section -->
         <div class="col">
             <div>
-                <div id="month-totals">
+                <div class="container" style="padding-top: 8%;">
+                    <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
+                      <div class="col text-center">
+                        <div class="p-3">Total Expenses</div>
+                      </div>
+                      <div class="col text-center">
+                        <div class="p-3">Avg Expenses</div>
+                      </div>
+                      <div class="col text-center">
+                        <div class="p-3">Total Income</div>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class id="total-expenses"></h5>
+                        </div>
+                        <div class="col text-center">
+                          <h5 class id="avg-expenses"></h5>
+                        </div>
+                      <div class="col text-center">
+                        <h5 class id="total-income"></h5>
+                      </div>
+                    </div>
+                  </div>
+                  
 
-                </div>
             </div>
         </div>
         <!-- Bar Charts -->

@@ -92,17 +92,18 @@ function ProcessBarChartExpenses() {
       dataType: "json",
     }).done(function(data) {
       sorted_dict = sort_month_year(data);
+      var total = 0;
+
+      // Get date range
+      getDateRange(sorted_dict);
+      //Get average expenses
+
       for (const [key, value] of Object.entries(sorted_dict)) {
         addData(expensesBarChart, key, value);
-
-        // $(".month-totals").each(function(key, value){
-        //   $("<li>", {
-        //     "class": "list-group-item",
-        //     text: key + " : " + value
-        //   });
-        // });
+        total += value;
       }
-
+      $("#total-expenses").html(total);
+      $("#avg-expenses").html(Math.round(total / Object.keys(sorted_dict).length));
 
       
     });
@@ -129,13 +130,30 @@ function ProcessBarChartExpenses() {
         dataType: "json",
       }).done(function(data) {
         sorted_dict = sort_month_year(data);
+        var total = 0;
+
+        //Get average income
+
         for (const [key, value] of Object.entries(sorted_dict)) {
           addData(incomeBarChart, key, value);
+          total += value;
         }
+        $("#total-income").html(total);
         
       });
     }
     }
+
+function getDateRange(dict_values){
+  var first = Object.keys(dict_values)[0];
+  var last = Object.keys(dict_values)[Object.keys(dict_values).length -1];
+
+  $("#summary-date-range").html("Summary " + first + " - " + last);
+}
+
+function calcAverage(dict_values){
+  
+}
 
 function sort_month_year(date){
     arr = [];
