@@ -1,9 +1,6 @@
 from flask import jsonify, request, redirect, session, render_template,url_for
 from passlib.hash import pbkdf2_sha256
-from datetime import datetime
-from collections import defaultdict
 import uuid
-import calendar
 
 from app import client
 db = client["financial-tracker"]
@@ -129,7 +126,6 @@ class User:
                                                 "_id": 0}))
         
         items = self.conbime_items_arr(current_items)
-
         return items
     
     def get_income(self, date):
@@ -140,7 +136,6 @@ class User:
                                                 "_id": 0}))
         
         items = self.conbime_items_arr(current_items)
-
         return items
     
     def conbime_items_arr(self, current_items):
@@ -153,4 +148,41 @@ class User:
             else:
                 pairs[item["type"]] = item["amount"]
         return pairs
-            
+    
+    def combined_val_total(self, current_items):
+        total_val = 0
+        for item in current_items:
+            total_val += int(item["amount"])
+        return total_val
+    
+
+# Profile Methods 
+
+    def get_profile_expenses_totals(self, arr_of_dates):
+        month_totals = {}
+        for date in arr_of_dates:
+            current_items = list(db.payments.find({"date":date, 
+                                                "user_id": session["user"]["_id"]}, 
+                                                {"amount": 1,
+                                                    "_id": 0}))
+            if current_items == []:
+                month_totals[str(date)] = 0
+            else:
+                total_val = self.combined_val_total(current_items)
+                month_totals[str(date)] = total_val
+        return month_totals
+    
+    def get_profile_income_totals(self, arr_of_dates):
+        month_totals = {}
+        for date in arr_of_dates:
+            current_items = list(db.income.find({"date":date, 
+                                                "user_id": session["user"]["_id"]}, 
+                                                {"amount": 1,
+                                                    "_id": 0}))
+            if current_items == []:
+                month_totals[str(date)] = 0
+            else:
+                total_val = self.combined_val_total(current_items)
+                month_totals[str(date)] = total_val
+        return month_totals
+    

@@ -47,3 +47,7 @@ def dashboard(month=datetime.now().month, year=datetime.now().year):
     print("Month: ", month)
     return render_template("dashboard.html", current_items_expenses=current_items_expenses, current_items_income=current_items_income, current_month=calendar.month_name[int(month)], current_year=year)
 
+@login_required
+@app.route("/summary/")
+def profile():
+    return render_template("user_profile.html")

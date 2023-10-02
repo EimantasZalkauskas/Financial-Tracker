@@ -1,12 +1,16 @@
 /* Nav Bar */
 
 .signout{
-    float:right;
-    padding-right: 2%;
+    float: right;
+    padding-left: 67%;
+}
+
+.spacing{
+    padding-left: 20px;
 }
 
 .user-info{
-    padding-left: 85%;
+    padding-left: 5%;
 }
 
 /* Top Heading */
@@ -26,6 +30,8 @@
     /* padding-bottom: 70px; */
 
 }
+
+/* Arrow Functionality */
 
 .arrow:hover{
     opacity: 0.5;
@@ -69,6 +75,8 @@ li{
     padding-left: 5%;
 }
 
+/* Circle Buttons */
+
 .btn-circle {
     width: 30px;
     height: 30px;
@@ -87,6 +95,8 @@ li{
     font-size: 30px;
     line-height: 0.1;
 }
+
+/* 2-1 Grid */
 
 .one-by-two {
     display: grid;
@@ -107,3 +117,17 @@ li{
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
   }
+
+  /* Pie chart padding */
+  .pie-chart{
+    padding-top: 50px;
+  }
+
+  /* Bar Chart */
+.bar-chart-top {
+    padding-top: 7%;
+}
+
+.bar-chart {
+    padding-top: 7%;
+}

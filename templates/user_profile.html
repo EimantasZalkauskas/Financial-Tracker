@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Nav Bar -->
+{% include 'navbar.html' %}
+
+<div class="container-fluid" onload="ProcessBarChartExpenses();">
+    <div class="text-center">
+        <h1 class="heading">Summary</h1>
+    </div>
+    <div class="row">
+        <!-- User Info Section -->
+        <div class="col">
+            <div>
+                <div id="month-totals">
+
+                </div>
+            </div>
+        </div>
+        <!-- Bar Charts -->
+        <div class="col">
+            <div class="bar-chart-top">
+                <h3 class="text-center">Total Expenses Per Month</h3>
+                <canvas id="expensesBarChart"></canvas>
+            </div>
+            <div class="bar-chart">
+                <h3 class="text-center">Total Income Per Month</h3>
+                <canvas id="incomeBarChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

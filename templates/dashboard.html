@@ -2,18 +2,7 @@
 
 {% block content %}
 <!-- Nav Bar -->
-<div >
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-      <li class="nav-item user-info" style="color: white">
-        {{ session["user"]['email'] }}
-      </li>
-      <li class="nav-item signout">
-        <a class="btn btn-primary" href="/user/signout">Sign Out</a>
-      </li>
-    </div>
-  </nav>
-</div>
+{% include 'navbar.html' %}
 
 <!-- Header Section -->
 
@@ -34,7 +23,7 @@
 
 <!-- Expenses Table Div -->
 
-<div class="container-fluid" style="padding-top:4%;" id="firstRow">
+<div class="container-fluid" style="padding-top:4%;" id="firstRow" >
   <div class="row">
     <div class="col expenses-table">
       <!-- Table Headers -->
@@ -93,7 +82,7 @@
     </div>
 
     <!-- Div for Pie Chart -->
-    <div class="col center">
+    <div class="col center pie-chart">
       <div class="chart-container" style=" height:22vh; width:22vw">
         <canvas id="expensesPieChart"></canvas>
       </div>
@@ -104,7 +93,7 @@
 
 <!-- Income Table Div -->
 
-<div class="container-fluid" style="padding-top:8%;">
+<div class="container-fluid" style="padding-top:5%;">
   <div class="row">
     <div class="col" style="padding-left: 5%;padding-top: 50px;">
       <!-- Table Headers -->
@@ -162,7 +151,7 @@
       </form>
     </div>
     <!-- Div for Pie Chart -->
-    <div class="col center">
+    <div class="col center pie-chart">
       <div class="chart-container" style=" height:22vh; width:22vw">
         <canvas id="incomePieChart"></canvas>
       </div>
