@@ -1,7 +1,5 @@
 from flask import jsonify, request, redirect, session, render_template,url_for
 from passlib.hash import pbkdf2_sha256
-from datetime import datetime
-from collections import defaultdict
 import uuid
 
 from app import client
@@ -56,9 +54,7 @@ class User:
     #Methods for processing data
     #
     #Save Methods
-    def save_expense(self, name, type, amount):
-        currentMonth = datetime.now().month
-        currentYear = datetime.now().year
+    def save_expense(self, name, type, amount, month, year):
         print(name, type, amount)
         print(session["user"]["_id"])
 
@@ -68,22 +64,20 @@ class User:
             "name": name,
             "type": type,
             "amount": amount,
-            "date": str(currentMonth) +"-"+str(currentYear)
+            "date": str(month) +"-"+str(year)
         }
 
         #print(expense)
 
         db.payments.insert_one(expense)
 
-        current_items = list(db.payments.find({"date":str(currentMonth) +"-"+str(currentYear), 
+        current_items = list(db.payments.find({"date":str(month) +"-"+str(year), 
                                                "user_id": session["user"]["_id"]}))
 
         print(current_items)
-        return redirect("/dashboard")
+        return redirect(url_for("dashboard", month=month, year=year))
     
-    def save_income(self, name, type, amount):
-        currentMonth = datetime.now().month
-        currentYear = datetime.now().year
+    def save_income(self, name, type, amount, month, year):
         print(name, type, amount)
         print(session["user"]["_id"])
 
@@ -93,17 +87,17 @@ class User:
             "name": name,
             "type": type,
             "amount": amount,
-            "date": str(currentMonth) +"-"+str(currentYear)
+            "date": str(month) +"-"+str(year)
         }
 
-
+        print(income)
         db.income.insert_one(income)
 
-        current_items = list(db.income.find({"date":str(currentMonth) +"-"+str(currentYear), 
+        current_items = list(db.income.find({"date":str(month) +"-"+str(year), 
                                                "user_id": session["user"]["_id"]}))
 
         print(current_items)
-        return redirect("/dashboard")
+        return redirect(url_for("dashboard", month=month, year=year))
     #Delete
     def delete_item_payment(self, name, type, amount, date):
         db.payments.find_one_and_delete({"name":name,
@@ -132,7 +126,6 @@ class User:
                                                 "_id": 0}))
         
         items = self.conbime_items_arr(current_items)
-
         return items
     
     def get_income(self, date):
@@ -143,7 +136,6 @@ class User:
                                                 "_id": 0}))
         
         items = self.conbime_items_arr(current_items)
-
         return items
     
     def conbime_items_arr(self, current_items):
@@ -156,5 +148,41 @@ class User:
             else:
                 pairs[item["type"]] = item["amount"]
         return pairs
-            
-                
+    
+    def combined_val_total(self, current_items):
+        total_val = 0
+        for item in current_items:
+            total_val += int(item["amount"])
+        return total_val
+    
+
+# Profile Methods 
+
+    def get_profile_expenses_totals(self, arr_of_dates):
+        month_totals = {}
+        for date in arr_of_dates:
+            current_items = list(db.payments.find({"date":date, 
+                                                "user_id": session["user"]["_id"]}, 
+                                                {"amount": 1,
+                                                    "_id": 0}))
+            if current_items == []:
+                month_totals[str(date)] = 0
+            else:
+                total_val = self.combined_val_total(current_items)
+                month_totals[str(date)] = total_val
+        return month_totals
+    
+    def get_profile_income_totals(self, arr_of_dates):
+        month_totals = {}
+        for date in arr_of_dates:
+            current_items = list(db.income.find({"date":date, 
+                                                "user_id": session["user"]["_id"]}, 
+                                                {"amount": 1,
+                                                    "_id": 0}))
+            if current_items == []:
+                month_totals[str(date)] = 0
+            else:
+                total_val = self.combined_val_total(current_items)
+                month_totals[str(date)] = total_val
+        return month_totals
+    
