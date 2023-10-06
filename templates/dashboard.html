@@ -81,19 +81,8 @@
       </form>
     </div>
     <!-- Col for % -->
-    <div class="col-sm-3 text-center dashboard-middle-section-padding">
-      <div class="row-cols-1" style="display:none;">
-        <h4>Needs</h4>
-        <h4 class="precent-padding" id="Needs"></h4>
-      </div>
-      <div class="row-cols-1" style="display:none;">
-        <h4>Wants</h4>
-        <h4 class="precent-padding" id="Wants"></h4>
-      </div>
-      <div class="row-cols-1" style="display:none;">
-        <h4>Savings</h4>
-        <h4 class="precent-padding" id="Savings"></h4>
-      </div>
+    <div class="col-sm-2">
+
     </div>
     <!-- Div for Pie Chart -->
     <div class="col  pie-chart">
@@ -105,9 +94,47 @@
   </div>
 </div>
 
+<!-- Row For Remainder -->
+<div class="container-fluid">
+  <div class="row dashboard-middle-section-padding text-center">
+    <div class="col text-center">
+          <h4>Remaining</h4>
+          <h4 id="Remaining"></h4>
+    </div>
+    <div class="col">
+      <div class="row text-center">
+        <div class="col">
+
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="col" style="display:none;">
+          <h4>Needs</h4>
+          <h4 class="precent-padding" id="Needs"></h4>
+        </div>
+        <div class="col" style="display:none;">
+          <h4>Wants</h4>
+          <h4 class="precent-padding" id="Wants"></h4>
+        </div>
+        <div class="col" style="display:none;">
+          <h4>Savings</h4>
+          <h4 class="precent-padding" id="Savings"></h4>
+        </div>
+        <div class="col" style="padding-right: 25%;">
+
+        </div>
+        <!-- <div class="col">
+
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Income Table Div -->
 
-<div class="container-fluid" style="padding-top:5%;">
+<div class="container-fluid">
   <div class="row">
     <div class="col" style="padding-left: 5%;padding-top: 50px;">
       <!-- Table Headers -->
@@ -165,28 +192,52 @@
       </form>
     </div>
     <!-- Col for % -->
-    <div class="col-sm-3 text-center dashboard-middle-section-padding">
-      <div class="row-cols-1" style="display:none;">
-        <h4>Salary</h4>
-        <h4 class="precent-padding" id="Salary"></h4>
-      </div>
-      <div class="row-cols-1" style="display:none;">
-        <h4>Side Hustle</h4>
-        <h4 class="precent-padding" id="SideHustle"></h4>
-      </div>
-      <div class="row-cols-1" style="display:none;">
-        <h4>Second Job</h4>
-        <h4 class="precent-padding" id="SecondJob"></h4>
-      </div>
-      <div class="row-cols-1" style="display:none;">
-        <h4>Other</h4>
-        <h4 class="precent-padding" id="Other"></h4>
-      </div>
+    <div class="col-sm-2">
+
     </div>
     <!-- Div for Pie Chart -->
     <div class="col pie-chart">
       <div class="chart-container" style=" height:22vh; width:22vw">
         <canvas id="incomePieChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Row For Bottom Vals -->
+<div class="container-fluid">
+  <div class="row dashboard-middle-section-padding">
+    <div class="col text-center">
+      <div class="col-sm-3 text-center ">
+        <!-- Right side of bottom row -->
+      </div>
+    </div>
+    <!-- Left Side of bottom row -->
+    <!-- Col for % -->
+    <div class="col">
+      <div class="row text-center bottom">
+        <div class="col">
+
+        </div>
+        <div class="col" style="display:none;">
+          <h4>Salary</h4>
+          <h4 class="precent-padding" id="Salary"></h4>
+        </div>
+        <div class="col" style="display:none;">
+          <h4>Side Hustle</h4>
+          <h4 class="precent-padding" id="SideHustle"></h4>
+        </div>
+        <div class="col" style="display:none;">
+          <h4>Second Job</h4>
+          <h4 class="precent-padding" id="SecondJob"></h4>
+        </div>
+        <div class="col" style="display:none;">
+          <h4>Other</h4>
+          <h4 class="precent-padding" id="Other"></h4>
+        </div>
+        <div class="col">
+
+        </div>
       </div>
     </div>
   </div>

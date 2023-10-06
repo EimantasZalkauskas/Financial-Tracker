@@ -86,3 +86,16 @@ def get_profile_income():
     date5 = request.form.get("date5")
     date6 = request.form.get("date6")
     return User().get_profile_income_totals([date1, date2, date3, date4, date5, date6])
+
+
+@app.route("/update/precentages/", methods=["POST"])
+def update_precentages():
+    needs = request.form.get("needs")
+    wants = request.form.get("wants")
+    savings = request.form.get("savings")
+
+    return User().update_precentages(needs, wants, savings)
+
+@app.route("/get/precentages/", methods=["POST"])
+def get_precentages():
+    return User().get_precentages()

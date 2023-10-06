@@ -2,10 +2,17 @@ from flask import Flask, render_template, session, redirect, request
 from functools import wraps
 from datetime import datetime
 from pymongo.mongo_client import MongoClient
+from openbankingapi import OpenBankingApi
 import calendar
+import requests
 
 
+# api = OpenBankingApi(timeout=5)
 
+# print(api)
+
+# current_accounts = api.business_current_accounts(banks[0])
+# print(current_accounts)
 
 #App setup
 app = Flask(__name__)
@@ -49,5 +56,11 @@ def dashboard(month=datetime.now().month, year=datetime.now().year):
 
 @login_required
 @app.route("/summary/")
+def summary():
+    return render_template("summary.html")
+
+
+@login_required
+@app.route("/settings/")
 def profile():
-    return render_template("user_profile.html")
+    return render_template("settings.html")

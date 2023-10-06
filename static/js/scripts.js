@@ -419,7 +419,6 @@ function ProcessChartIncome() {
       data: {"date":date},
       dataType: "json",
     }).done(function(data) {
-      console.log(data);
       removeData(incomePieChart)
       var total = 0;
       for (const [key, value] of Object.entries(data)) {
@@ -430,7 +429,7 @@ function ProcessChartIncome() {
         percentage(parseInt(value), total, key);
       }
       addTotal(incomePieChart, total);
-      
+      calcRemaining();
     });
   }
 }
@@ -527,8 +526,28 @@ function incramentPlusOneToDate(month, year, range){
 }
 
 function percentage(partialValue, totalValue, key) {
-  key = key.replace(/\s/g, '');
-  current =  (100 * partialValue) / totalValue;
-  $("#"+key).html(Math.round(current)+"%");
-  $("#"+key).parent().css("display", "block");
+
+  $.ajax({
+    url: "/get/precentages/",
+      type: "POST",
+    success: function(resp) {
+      key = key.replace(/\s/g, '');
+      current =  (100 * partialValue) / totalValue;
+      $("#"+key).html(Math.round(current)+"%");
+      $("#"+key).parent().css("display", "block");
+
+      if(current > resp[key.toLowerCase()]){
+        $("#"+key).css("color", "red");
+      }
+  },
+    error: function (resp){
+  }
+  });
+
 } 
+
+function calcRemaining(){
+  var expenses = parseInt(expensesPieChart.options.elements.center.text);
+  var income = parseInt(incomePieChart.options.elements.center.text);
+  $("#Remaining").html(income-expenses);
+}
