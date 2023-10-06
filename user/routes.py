@@ -93,8 +93,9 @@ def update_precentages():
     needs = request.form.get("needs")
     wants = request.form.get("wants")
     savings = request.form.get("savings")
+    currency = request.form.get("currency")
 
-    return User().update_precentages(needs, wants, savings)
+    return User().update_precentages(needs, wants, savings, currency)
 
 @app.route("/get/precentages/", methods=["POST"])
 def get_precentages():

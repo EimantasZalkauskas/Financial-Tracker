@@ -18,25 +18,34 @@
 
             <!-- Password Reset  -->
             <div class="col text-center element-padding-top" style="padding-top: 6%;">
-                <button class="btn btn-primary rounded-button" href="/password/reset/">Reset Password</button>
+                <button class="btn button rounded-button" href="/password/reset/">Reset Password</button>
               </div>
             </div>
             <!-- Needs Wants Expeneses -->
             <div>
                 <h4 style="padding-top: 8%;">Set Preferences</h4>
             </div>
-            <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3" style="padding-top: 4%;">
-                <div class="col text-center">
-                  <div class="h5">Needs %</div>
-                </div>
-                <div class="col text-center">
-                  <div class="h5">Wants %</div>
-                </div>
-                <div class="col text-center">
-                  <div class="h5">Savings %</div>
-                </div>
-            </div>
-                <form name="update-precentages" style="padding-top: 20px;">
+            <form name="update-precentages" style="padding-top: 20px;">
+                    <div class="row row-cols-1 row-cols-lg-1 g-2 g-lg-3">
+                        <div class="col text-center">
+                            <div class="h5">Currency</div>
+                        </div>
+                        <div class="col text-center">
+                            <select class="form-select w-25 rounded-button text-center" id="currency" name="currency" style="margin-left: 38%;" required>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3" style="padding-top: 6%;">
+                        <div class="col text-center">
+                        <div class="h5">Needs %</div>
+                        </div>
+                        <div class="col text-center">
+                        <div class="h5">Wants %</div>
+                        </div>
+                        <div class="col text-center">
+                        <div class="h5">Savings %</div>
+                        </div>
+                    </div>
                     <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
                         <div class="col text-center" style="padding-left: 11%;">
                             <input type="number" id="needs" name="needs%" class="form-control w-50 rounded-button text-center" required>
@@ -50,10 +59,10 @@
                     </div>
                     <div style="padding-top:3%;">
                         <p id="error-settings" style="color:red; visibility:hidden;">Make sure all values total 100</p>
-                        <button type="submit" class="btn btn-primary rounded-button" >Update</button>
+                        <button type="submit" class="btn button rounded-button" >Update</button>
                     </div>
                 </div>
-                </form>
+            </form>
     </div>
 
 

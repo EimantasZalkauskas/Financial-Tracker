@@ -51,7 +51,9 @@ def dashboard(month=datetime.now().month, year=datetime.now().year):
                                            "user_id": session["user"]["_id"]}))
     current_items_income = list(db.income.find({"date":str(month) +"-"+str(year), 
                                            "user_id": session["user"]["_id"]}))
-    print("Month: ", month)
+    # currency = list(db.preferences.find({"user_id": session["user"]["_id"]}, 
+    #                                         {"currency": 1,
+    #                                          "_id":0}))
     return render_template("dashboard.html", current_items_expenses=current_items_expenses, current_items_income=current_items_income, current_month=calendar.month_name[int(month)], current_year=year)
 
 @login_required

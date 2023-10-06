@@ -96,6 +96,7 @@ class User:
         return redirect("/dashboard")
 
     def delete_item_income(self, name, type, amount, date):
+        print(amount)
         db.income.find_one_and_delete({"name":name,
                                         "type":type,
                                         "amount":amount,
@@ -175,20 +176,22 @@ class User:
 
 # Settings Methods
 
-    def update_precentages(self, needs, wants, savings):
+    def update_precentages(self, needs, wants, savings, currency):
         preferences = {
             "_id": uuid.uuid4().hex,
             "user_id": session["user"]["_id"],
             "needs": needs,
             "wants": wants,
-            "savings": savings
+            "savings": savings,
+            "currency": currency
         }
         res = list(db.preferences.find({"user_id": session["user"]["_id"]}))
         if len(res) > 0:
             db.preferences.update({"user_id": session["user"]["_id"]},
                                   {"needs": needs,
                                    "wants": wants,
-                                   "savings": savings})
+                                   "savings": savings,
+                                   "currency": currency})
             return jsonify({"resp": "Success Updated Preferences"}), 200
         else:
             db.preferences.insert_one(preferences)
@@ -197,7 +200,7 @@ class User:
     def get_precentages(self):
         res = list(db.preferences.find({"user_id": session["user"]["_id"]}))
         if len(res) > 0:
-            return {"needs": res[0]["needs"], "wants": res[0]["wants"], "savings": res[0]["savings"]}
+            return {"needs": res[0]["needs"], "wants": res[0]["wants"], "savings": res[0]["savings"], "currency": res[0]["currency"]}
 
         return "No Result"
 

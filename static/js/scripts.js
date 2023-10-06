@@ -1,3 +1,16 @@
+// Global
+var CURRENT_CURRENCY = "£";
+
+$.ajax({
+  url: "/get/precentages/",
+    type: "POST",
+  success: function(resp) {
+    CURRENT_CURRENCY = resp["currency"];
+},
+  error: function (resp){
+}
+});
+
 // Sign Up
 $("form[name=signup_form]").submit(function (event) {
         var $form = $(this);
@@ -278,6 +291,7 @@ function ProcessChartExpenses() {
         percentage(parseInt(value), total, key);
       }
     });
+
   }
 }
 
@@ -488,7 +502,7 @@ function getMonthFromString(mon){
 }
 
 function addTotal(chart, total) {
-  chart.options.elements.center.text = total;
+  chart.options.elements.center.text = CURRENT_CURRENCY + total;
   chart.update();
 }
 
@@ -547,7 +561,10 @@ function percentage(partialValue, totalValue, key) {
 } 
 
 function calcRemaining(){
-  var expenses = parseInt(expensesPieChart.options.elements.center.text);
-  var income = parseInt(incomePieChart.options.elements.center.text);
-  $("#Remaining").html(income-expenses);
+  var expenses = expensesPieChart.options.elements.center.text.slice(1);
+  var income = incomePieChart.options.elements.center.text.slice(1);
+  $("#Remaining").html(CURRENT_CURRENCY + (parseInt(income)-parseInt(expenses)).toString());
+  if(income-expenses < 0){
+    $("#Remaining").css("color", "red");
+  }
 }

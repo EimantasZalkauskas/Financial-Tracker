@@ -102,8 +102,8 @@ function ProcessBarChartExpenses() {
         addData(expensesBarChart, key, value);
         total += value;
       }
-      $("#total-expenses").html(total);
-      $("#avg-expenses").html(Math.round(total / Object.keys(sorted_dict).length));
+      $("#total-expenses").html(CURRENT_CURRENCY + total);
+      $("#avg-expenses").html(CURRENT_CURRENCY + Math.round(total / Object.keys(sorted_dict).length));
 
       
     });
@@ -138,7 +138,7 @@ function ProcessBarChartExpenses() {
           addData(incomeBarChart, key, value);
           total += value;
         }
-        $("#total-income").html(total);
+        $("#total-income").html(CURRENT_CURRENCY+total);
         
       });
     }

@@ -154,6 +154,12 @@ li{
     padding-top: 100px;
   }
 
+  .pie-chart .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+  }
+
   /* Bar Chart */
 .bar-chart-top {
     padding-top: 7%;
@@ -175,19 +181,24 @@ li{
 }
 
 .precent-padding{
-    padding-top: 3%;
+    padding-top: 25%;
 }
 
 .remaining-padding{
     padding-left: 23%;
 }
 
+.precentages {
+    padding-top: 10%;
+    padding-right: 3%;
+}
+
 /* Settings */
 
 .cent {
-    background-color: #71C9CE;
+    background-color: #A6E3E9;
     width: 700px;
-    height: 550px;
+    height: 650px;
     margin:6% 23%;
     border-radius: 40px;
   }
