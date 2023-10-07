@@ -91,9 +91,8 @@ function ProcessBarChartExpenses() {
             "date6": date_arr[5],},
       dataType: "json",
     }).done(function(data) {
-      sorted_dict = sort_month_year(data);
+      sorted_dict = sort_month_year(data[0]);
       var total = 0;
-
       // Get date range
       getDateRange(sorted_dict);
       //Get average expenses
@@ -102,9 +101,19 @@ function ProcessBarChartExpenses() {
         addData(expensesBarChart, key, value);
         total += value;
       }
+      // Total Avg Calc
       $("#total-expenses").html(CURRENT_CURRENCY + total);
       $("#avg-expenses").html(CURRENT_CURRENCY + Math.round(total / Object.keys(sorted_dict).length));
 
+      // Avg Precentage Calc
+      for (const [key, value] of Object.entries(data[2])) {
+        percentage(value, total, key);
+      }
+
+      // Precentage Calc
+      $("#needs").html(data[1]["needs"]+"%");
+      $("#wants").html(data[1]["wants"]+"%");
+      $("#savings").html(data[1]["savings"]+"%");
       
     });
   }
@@ -139,6 +148,7 @@ function ProcessBarChartExpenses() {
           total += value;
         }
         $("#total-income").html(CURRENT_CURRENCY+total);
+        $("#avg-income").html(CURRENT_CURRENCY + Math.round(total / Object.keys(sorted_dict).length));
         
       });
     }

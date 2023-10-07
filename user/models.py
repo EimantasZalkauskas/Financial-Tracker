@@ -148,17 +148,27 @@ class User:
 
     def get_profile_expenses_totals(self, arr_of_dates):
         month_totals = {}
+        arr = []
         for date in arr_of_dates:
             current_items = list(db.payments.find({"date":date, 
                                                 "user_id": session["user"]["_id"]}, 
                                                 {"amount": 1,
+                                                 "type": 1,
                                                     "_id": 0}))
             if current_items == []:
                 month_totals[str(date)] = 0
             else:
                 total_val = self.combined_val_total(current_items)
                 month_totals[str(date)] = total_val
-        return month_totals
+        # totals of each category
+        totals = self.conbime_items_arr(current_items)
+        # user pref precentages 
+        precentages_pref = self.get_precentages()
+        #combine all into array 
+        arr.append(month_totals)
+        arr.append(precentages_pref)
+        arr.append(totals)
+        return arr
     
     def get_profile_income_totals(self, arr_of_dates):
         month_totals = {}
