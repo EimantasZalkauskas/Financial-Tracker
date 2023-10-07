@@ -3,7 +3,6 @@ $("form[name=update-precentages]").submit(function (event) {
     var wants = jQuery('input[name="wants%"]').val();
     var savings = jQuery('input[name="savings%"]').val();
     var currency = jQuery('select[name=currency]').val();
-    console.log(currency);
     if (parseInt(needs) + parseInt(wants) + parseInt(savings) == 100){
         $("#error-settings").css("visibility", "hidden");
         $.ajax({

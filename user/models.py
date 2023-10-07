@@ -1,5 +1,6 @@
 from flask import jsonify, request, redirect, session, render_template,url_for
 from passlib.hash import pbkdf2_sha256
+from collections import ChainMap
 import uuid
 
 from app import client
@@ -128,8 +129,9 @@ class User:
     
     def conbime_items_arr(self, current_items):
         pairs = {}
+        print(current_items)
         for item in current_items:
-            
+            print(item)
             if item["type"] in pairs:
                 current_amount = pairs[item["type"]]
                 pairs[item["type"]] = int(item["amount"]) + int(current_amount)
@@ -149,6 +151,7 @@ class User:
     def get_profile_expenses_totals(self, arr_of_dates):
         month_totals = {}
         arr = []
+        pref_totals = []
         for date in arr_of_dates:
             current_items = list(db.payments.find({"date":date, 
                                                 "user_id": session["user"]["_id"]}, 
@@ -160,14 +163,14 @@ class User:
             else:
                 total_val = self.combined_val_total(current_items)
                 month_totals[str(date)] = total_val
-        # totals of each category
-        totals = self.conbime_items_arr(current_items)
+                # totals of each category
+                pref_totals.append(current_items)
         # user pref precentages 
         precentages_pref = self.get_precentages()
         #combine all into array 
         arr.append(month_totals)
         arr.append(precentages_pref)
-        arr.append(totals)
+        arr.append(pref_totals)
         return arr
     
     def get_profile_income_totals(self, arr_of_dates):

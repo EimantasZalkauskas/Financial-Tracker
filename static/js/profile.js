@@ -96,7 +96,6 @@ function ProcessBarChartExpenses() {
       // Get date range
       getDateRange(sorted_dict);
       //Get average expenses
-
       for (const [key, value] of Object.entries(sorted_dict)) {
         addData(expensesBarChart, key, value);
         total += value;
@@ -106,7 +105,20 @@ function ProcessBarChartExpenses() {
       $("#avg-expenses").html(CURRENT_CURRENCY + Math.round(total / Object.keys(sorted_dict).length));
 
       // Avg Precentage Calc
-      for (const [key, value] of Object.entries(data[2])) {
+      var pref_totals = {}
+      for(i=0; i < data[2].length; i++){
+        for(y=0; y < data[2][i].length; y++){
+          if(data[2][i][y]["type"] in pref_totals){
+            current_amount = pref_totals[data[2][i][y]["type"]];
+            pref_totals[data[2][i][y]["type"]] = parseInt(current_amount) + parseInt(data[2][i][y]["amount"]);
+          }
+          else{
+            pref_totals[data[2][i][y]["type"]] = parseInt(data[2][i][y]["amount"]);
+          }
+        }
+      }
+      console.log(pref_totals);
+      for (const [key, value] of Object.entries(pref_totals)) {
         percentage(value, total, key);
       }
 
