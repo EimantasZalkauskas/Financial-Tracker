@@ -1,3 +1,16 @@
+// Global
+var CURRENT_CURRENCY = "£";
+
+$.ajax({
+  url: "/get/precentages/",
+    type: "POST",
+  success: function(resp) {
+    CURRENT_CURRENCY = resp["currency"];
+},
+  error: function (resp){
+}
+});
+
 // Sign Up
 $("form[name=signup_form]").submit(function (event) {
         var $form = $(this);
@@ -210,7 +223,7 @@ function deleteRowExpenses(btn) {
 var expensesPieChart = new Chart(document.getElementById("expensesPieChart"), {
     type: 'pie',
     options: {
-        legend: { display: false },
+        legend: { display: true },
         rotation: -20,
         cutoutPercentage: 50,
         animation: {
@@ -274,8 +287,12 @@ function ProcessChartExpenses() {
         total += parseInt(value);
       }
       addTotal(expensesPieChart, total);
-      
+      for (const [key, value] of Object.entries(data)) {
+        percentage(parseInt(value), total, key);
+      }
+      calcRemaining(expensesPieChart.options.elements.center.text.slice(1), incomePieChart.options.elements.center.text.slice(1));
     });
+
   }
 }
 
@@ -357,7 +374,7 @@ $.ajax({
 var incomePieChart = new Chart(document.getElementById("incomePieChart"), {
     type: 'pie',
     options: {
-        legend: { display: false },
+        legend: { display: true },
         rotation: -20,
         cutoutPercentage: 50,
         animation: {
@@ -423,8 +440,11 @@ function ProcessChartIncome() {
         addData(incomePieChart, key, value);
         total += parseInt(value);
       }
+      for (const [key, value] of Object.entries(data)) {
+        percentage(parseInt(value), total, key);
+      }
       addTotal(incomePieChart, total);
-      
+      calcRemaining(expensesPieChart.options.elements.center.text.slice(1), incomePieChart.options.elements.center.text.slice(1));
     });
   }
 }
@@ -483,7 +503,7 @@ function getMonthFromString(mon){
 }
 
 function addTotal(chart, total) {
-  chart.options.elements.center.text = total;
+  chart.options.elements.center.text = CURRENT_CURRENCY + total;
   chart.update();
 }
 
@@ -518,4 +538,34 @@ function incramentPlusOneToDate(month, year, range){
     value_arr.push(date);
   }
   return value_arr.reverse();
+}
+
+function percentage(partialValue, totalValue, key) {
+
+  $.ajax({
+    url: "/get/precentages/",
+      type: "POST",
+    success: function(resp) {
+      key = key.replace(/\s/g, '');
+      current =  (100 * partialValue) / totalValue;
+      $("#"+key).html(Math.round(current)+"%");
+      $("#"+key).parent().css("display", "block");
+
+      if(current > resp[key.toLowerCase()]){
+        $("#"+key).css("color", "red");
+      }
+  },
+    error: function (resp){
+  }
+  });
+
+} 
+
+function calcRemaining(expenses, income){
+    console.log(expenses);
+    console.log(income);
+    $("#Remaining").html(CURRENT_CURRENCY + (parseInt(income)-parseInt(expenses)).toString());
+    if(income-expenses < 0){
+      $("#Remaining").css("color", "red");
+    }
 }

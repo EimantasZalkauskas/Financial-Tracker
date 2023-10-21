@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Nav Bar -->
+{% include 'navbar.html' %}
+
+<div class="container-fluid" onload="ProcessBarChartExpenses();">
+    <div class="text-center">
+        <h1 class="heading" id="summary-date-range">Summary</h1>
+    </div>
+    <div class="row">
+        <!-- User Info Section -->
+        <div class="col">
+            <div>
+                <div class="container" style="padding-top: 20%;">
+                  <!-- Top 2 cols -->
+                    <div class="row row-cols-2 row-cols-lg-2 g-2 g-lg-2">
+                      <div class="col text-center">
+                        <div class="p-3">Total Expenses</div>
+                      </div>
+                      <div class="col text-center">
+                        <div class="p-3">Avg Expenses</div>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class id="total-expenses"></h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class id="avg-expenses"></h5>
+                      </div>
+                      <div class="col text-center">
+                        <div class="p-3">Total Income</div>
+                      </div>
+                      <div class="col text-center">
+                        <div class="p-3">Average Income</div>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class id="total-income"></h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class id="avg-income"></h5>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Middle section -->
+                  <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
+
+                  </div>
+                  <!-- Bottom 3 cols -->
+                  <div class="container" style="padding-top: 37%;">
+                    <div class="text-center">
+                      <h4>Goal %</h4>
+                    </div>
+                    <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
+                      <div class="col text-center">
+                        <div class="p-3">Needs</div>
+                      </div>
+                      <div class="col text-center">
+                        <div class="p-3">Wants</div>
+                      </div>
+                      <div class="col text-center">
+                        <div class="p-3">Savings</div>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class id="needs"></h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class id="wants"></h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class id="savings"></h5>
+                      </div>
+                    </div>
+                    <div class="text-center" style="padding-top: 8%;">
+                      <h4>Avg %</h4>
+                    </div>
+                    <div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-3">
+                      <div class="col text-center">
+                        <div class="p-3">Needs</div>
+                      </div>
+                      <div class="col text-center">
+                        <div class="p-3">Wants</div>
+                      </div>
+                      <div class="col text-center">
+                        <div class="p-3">Savings</div>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class id="Needs"></h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class id="Wants"></h5>
+                      </div>
+                      <div class="col text-center">
+                        <h5 class id="Savings"></h5>
+                      </div>
+                    </div>
+                  </div>
+                  
+
+            </div>
+        </div>
+        <!-- Bar Charts -->
+        <div class="col">
+            <div class="bar-chart-top">
+                <h3 class="text-center">Total Expenses Per Month</h3>
+                <canvas id="expensesBarChart"></canvas>
+            </div>
+            <div class="bar-chart">
+                <h3 class="text-center">Total Income Per Month</h3>
+                <canvas id="incomeBarChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

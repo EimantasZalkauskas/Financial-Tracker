@@ -1,3 +1,27 @@
+/* Base */
+
+
+h1{
+    font-family: "Roboto";
+    color: #253541;
+    opacity: .7;
+}
+
+h4{
+    font-family: "Roboto";
+    opacity: .7;
+}
+
+.button {
+    background-color: #71C9CE;
+    border-radius: 25px;
+    font-family: "Roboto";
+}
+
+.button:hover{
+    opacity: .5;
+}
+
 /* Nav Bar */
 
 .signout{
@@ -11,6 +35,13 @@
 
 .user-info{
     padding-left: 5%;
+}
+
+/* Login / Sign Up */
+
+.bg-colour-card{
+    background-color: #A6E3E9;
+    border-radius: 25px;
 }
 
 /* Top Heading */
@@ -120,7 +151,13 @@ li{
 
   /* Pie chart padding */
   .pie-chart{
-    padding-top: 50px;
+    padding-top: 100px;
+  }
+
+  .pie-chart .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
   }
 
   /* Bar Chart */
@@ -131,3 +168,48 @@ li{
 .bar-chart {
     padding-top: 7%;
 }
+
+
+/* Dashboard */
+
+.dashboard-middle-section-padding{
+    padding-top: 2%;
+}
+
+.bottom{
+    padding-top: 15%;
+}
+
+.precent-padding{
+    padding-top: 25%;
+}
+
+.remaining-padding{
+    padding-left: 23%;
+}
+
+.precentages {
+    padding-top: 10%;
+    padding-right: 3%;
+}
+
+/* Settings */
+
+.cent {
+    background-color: #A6E3E9;
+    width: 700px;
+    height: 650px;
+    margin:6% 23%;
+    border-radius: 40px;
+  }
+
+.rounded-button{
+    border-radius: 40px;
+}
+
+.element-padding-top{
+    padding-top: 3%;
+}
+
+
+

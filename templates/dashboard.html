@@ -80,20 +80,52 @@
         <button type="submit" class="btn btn-primary btn-circle btn-xl" onclick="addRowExpenses()">+</button>
       </form>
     </div>
+    <!-- Col Spacer -->
+    <div class="col-sm-1">
 
+    </div>
     <!-- Div for Pie Chart -->
-    <div class="col center pie-chart">
-      <div class="chart-container" style=" height:22vh; width:22vw">
-        <canvas id="expensesPieChart"></canvas>
+    <div class="col  pie-chart">
+        <canvas id="expensesPieChart" style=" height:14vh; width:14vw"></canvas>
       </div>
+      <!-- Col for % -->
+      <div class="col-sm-1 precentages">
+          <div class="text-center">
+            <div class="row" style="display:none;">
+              <h4>Needs</h4>
+              <h4 id="Needs"></h4>
+            </div>
+            <div class="row precent-padding" style="display:none;">
+              <h4>Wants</h4>
+              <h4  id="Wants"></h4>
+            </div>
+            <div class="row precent-padding" style="display:none;">
+              <h4>Savings</h4>
+              <h4  id="Savings"></h4>
+            </div>
+          </div>
       </div>
+      <!-- Spacer
+      <div class="col-sm-1">
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- Row For Remainder -->
+<div class="container-fluid">
+  <div class="row dashboard-middle-section-padding text-center">
+    <div class="col text-center">
+          <h4>Remaining</h4>
+          <h4 id="Remaining"></h4>
+    </div>
     </div>
   </div>
 </div>
 
 <!-- Income Table Div -->
 
-<div class="container-fluid" style="padding-top:5%;">
+<div class="container-fluid">
   <div class="row">
     <div class="col" style="padding-left: 5%;padding-top: 50px;">
       <!-- Table Headers -->
@@ -150,12 +182,39 @@
         <button type="submit" class="btn btn-primary btn-circle btn-xl" onclick="addRowIncome()">+</button>
       </form>
     </div>
+    <!-- Col for % -->
+    <div class="col-sm-1">
+
+    </div>
     <!-- Div for Pie Chart -->
-    <div class="col center pie-chart">
-      <div class="chart-container" style=" height:22vh; width:22vw">
-        <canvas id="incomePieChart"></canvas>
+    <div class="col pie-chart">
+      <div class="chart-container">
+        <canvas id="incomePieChart" style=" height:14vh; width:14vw"></canvas>
       </div>
     </div>
+    <!-- Col for % -->
+    <div class="col-sm-1 precentages">
+      <div class="text-center">
+        <div class="row precent-padding" style="display:none;">
+          <h4>Salary</h4>
+          <h4 id="Salary"></h4>
+        </div>
+        <div class="row precent-padding" style="display:none;">
+          <h4>Side Hustle</h4>
+          <h4 id="SideHustle"></h4>
+        </div>
+        <div class="row precent-padding" style="display:none;">
+          <h4>Second Job</h4>
+          <h4 id="SecondJob"></h4>
+        </div>
+        <div class="row precent-padding" style="display:none;">
+          <h4>Other</h4>
+          <h4 id="Other"></h4>
+        </div>
+      </div>
+  </div>
   </div>
 </div>
+
+
 {% endblock %}

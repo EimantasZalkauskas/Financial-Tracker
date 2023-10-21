@@ -11,7 +11,7 @@
     <script src="https://kit.fontawesome.com/b576e2bfdb.js" crossorigin="anonymous"></script>
     <title>Financial Tracker</title>
 </head>
-<body onload="ProcessChartExpenses();ProcessChartIncome();ProcessBarChartExpenses();ProcessBarChartIncome();">
+<body onload="ProcessChartExpenses();ProcessChartIncome();ProcessBarChartExpenses();ProcessBarChartIncome();setPreferenceVal();" style="padding-bottom: 200px;">
 
     {% block content %}
 
@@ -20,6 +20,31 @@
     <script type="text/javascript" src="/static/js/jquery.js"></script>
     <script type="text/javascript" src="/static/js/scripts.js"></script>
     <script type="text/javascript" src="/static/js/profile.js"></script>
+    <script type="text/javascript" src="/static/js/settings.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyCZurHtfCZvxK35LTUow78rvhME0NRcjmM",
+          authDomain: "codavi-website.firebaseapp.com",
+          projectId: "codavi-website",
+          storageBucket: "codavi-website.appspot.com",
+          messagingSenderId: "590486919555",
+          appId: "1:590486919555:web:eefd0e62208729c5363eb6",
+          measurementId: "G-V63Z0TS6M4"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
+
 </body>
 </html>
 

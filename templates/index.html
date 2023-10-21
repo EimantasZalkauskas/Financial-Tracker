@@ -1,49 +1,53 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<div class="row center-cards">
-    <div class="col-sm-6">
-        <div class="text-center">
-            <div class="card-body">
-                    <h1 class="text-center">Create an Account</h1>
-                    <form name="signup_form">
-                        <div class="form-floating">
-                            <input type="email" class="form-control" name="email" class="field">
-                            <label for="floatingInput">Email</label>
-                        </div>
-                        <div class="form-floating">
-                            <input type="password" class="form-control" name="password" class="field">
-                            <label for="floatingInput">Password</label>
-                        </div>     
-                        <p class="error"></p>
-        
-                        <button type="submit" class="btn btn-primary login-button">Sign Up</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    
+<div class="text-center heading">
+    <h1>Join & Track Your Finances Today!</h1>
+</div>
+<div class="container-fluid">
+    <div class="row center-cards">
         <div class="col-sm-6">
-            <div class="text-center">
+            <div class="text-center bg-colour-card">
                 <div class="card-body">
-                    <h1 class="text-center padding-under">Log In</h1>
-                    <form name="login_form">
-                        <div class="form-floating">
-                            <input type="email" class="form-control" name="email" class="field">
-                            <label for="floatingInput">Email</label>
-                        </div>
-                        <div class="form-floating">
-                            <input type="password" class="form-control" name="password" class="field">
-                            <label for="floatingInput">Password</label>
-                        </div>     
-                        <p class="error"></p>
-        
-                        <button type="submit" class="btn btn-primary login-button">Log In</button>
-                    </form>
+                    <form name="signup_form">
+                        <h1 class="text-center padding-under">Create an Account</h1>
+                            <div class="form-floating">
+                                <input type="email" class="form-control" name="email" class="field">
+                                <label for="floatingInput">Email</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" name="password" class="field">
+                                <label for="floatingInput">Password</label>
+                            </div>     
+                            <p class="error"></p>
+            
+                            <button type="submit" class="btn button login-button">Sign Up</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        
+            <div class="col-sm-6">
+                <div class="text-center">
+                    <div class="card-body bg-colour-card">
+                        <h1 class="text-center padding-under">Log In</h1>
+                        <form name="login_form">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" name="email" class="field">
+                                <label for="floatingInput">Email</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" name="password" class="field">
+                                <label for="floatingInput">Password</label>
+                            </div>     
+                            <p class="error"></p>
+            
+                            <button type="submit" class="btn button login-button">Log In</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
 </div>
 
 

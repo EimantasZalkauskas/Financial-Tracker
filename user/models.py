@@ -1,5 +1,6 @@
 from flask import jsonify, request, redirect, session, render_template,url_for
 from passlib.hash import pbkdf2_sha256
+from collections import ChainMap
 import uuid
 
 from app import client
@@ -20,7 +21,6 @@ class User:
             "email": request.form.get("email")
         })
 
-        print(user)
 
         if user and pbkdf2_sha256.verify(request.form.get("password"), user["password"]):
             return self.start_session(user)
@@ -55,8 +55,6 @@ class User:
     #
     #Save Methods
     def save_expense(self, name, type, amount, month, year):
-        print(name, type, amount)
-        print(session["user"]["_id"])
 
         expense = {
             "_id": uuid.uuid4().hex,
@@ -67,19 +65,14 @@ class User:
             "date": str(month) +"-"+str(year)
         }
 
-        #print(expense)
 
         db.payments.insert_one(expense)
 
-        current_items = list(db.payments.find({"date":str(month) +"-"+str(year), 
-                                               "user_id": session["user"]["_id"]}))
 
-        print(current_items)
         return redirect(url_for("dashboard", month=month, year=year))
     
     def save_income(self, name, type, amount, month, year):
-        print(name, type, amount)
-        print(session["user"]["_id"])
+
 
         income = {
             "_id": uuid.uuid4().hex,
@@ -90,13 +83,8 @@ class User:
             "date": str(month) +"-"+str(year)
         }
 
-        print(income)
         db.income.insert_one(income)
 
-        current_items = list(db.income.find({"date":str(month) +"-"+str(year), 
-                                               "user_id": session["user"]["_id"]}))
-
-        print(current_items)
         return redirect(url_for("dashboard", month=month, year=year))
     #Delete
     def delete_item_payment(self, name, type, amount, date):
@@ -109,6 +97,7 @@ class User:
         return redirect("/dashboard")
 
     def delete_item_income(self, name, type, amount, date):
+        print(amount)
         db.income.find_one_and_delete({"name":name,
                                         "type":type,
                                         "amount":amount,
@@ -140,8 +129,9 @@ class User:
     
     def conbime_items_arr(self, current_items):
         pairs = {}
+        print(current_items)
         for item in current_items:
-            
+            print(item)
             if item["type"] in pairs:
                 current_amount = pairs[item["type"]]
                 pairs[item["type"]] = int(item["amount"]) + int(current_amount)
@@ -160,17 +150,28 @@ class User:
 
     def get_profile_expenses_totals(self, arr_of_dates):
         month_totals = {}
+        arr = []
+        pref_totals = []
         for date in arr_of_dates:
             current_items = list(db.payments.find({"date":date, 
                                                 "user_id": session["user"]["_id"]}, 
                                                 {"amount": 1,
+                                                 "type": 1,
                                                     "_id": 0}))
             if current_items == []:
                 month_totals[str(date)] = 0
             else:
                 total_val = self.combined_val_total(current_items)
                 month_totals[str(date)] = total_val
-        return month_totals
+                # totals of each category
+                pref_totals.append(current_items)
+        # user pref precentages 
+        precentages_pref = self.get_precentages()
+        #combine all into array 
+        arr.append(month_totals)
+        arr.append(precentages_pref)
+        arr.append(pref_totals)
+        return arr
     
     def get_profile_income_totals(self, arr_of_dates):
         month_totals = {}
@@ -185,4 +186,34 @@ class User:
                 total_val = self.combined_val_total(current_items)
                 month_totals[str(date)] = total_val
         return month_totals
+
+# Settings Methods
+
+    def update_precentages(self, needs, wants, savings, currency):
+        preferences = {
+            "_id": uuid.uuid4().hex,
+            "user_id": session["user"]["_id"],
+            "needs": needs,
+            "wants": wants,
+            "savings": savings,
+            "currency": currency
+        }
+        res = list(db.preferences.find({"user_id": session["user"]["_id"]}))
+        if len(res) > 0:
+            db.preferences.update({"user_id": session["user"]["_id"]},
+                                  {"needs": needs,
+                                   "wants": wants,
+                                   "savings": savings,
+                                   "currency": currency})
+            return jsonify({"resp": "Success Updated Preferences"}), 200
+        else:
+            db.preferences.insert_one(preferences)
+            return jsonify({"resp": "Success Set Preferences"}), 200
     
+    def get_precentages(self):
+        res = list(db.preferences.find({"user_id": session["user"]["_id"]}))
+        if len(res) > 0:
+            return {"needs": res[0]["needs"], "wants": res[0]["wants"], "savings": res[0]["savings"], "currency": res[0]["currency"]}
+
+        return "No Result"
+
