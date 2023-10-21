@@ -290,6 +290,7 @@ function ProcessChartExpenses() {
       for (const [key, value] of Object.entries(data)) {
         percentage(parseInt(value), total, key);
       }
+      calcRemaining(expensesPieChart.options.elements.center.text.slice(1), incomePieChart.options.elements.center.text.slice(1));
     });
 
   }
@@ -443,7 +444,7 @@ function ProcessChartIncome() {
         percentage(parseInt(value), total, key);
       }
       addTotal(incomePieChart, total);
-      calcRemaining();
+      calcRemaining(expensesPieChart.options.elements.center.text.slice(1), incomePieChart.options.elements.center.text.slice(1));
     });
   }
 }
@@ -560,11 +561,11 @@ function percentage(partialValue, totalValue, key) {
 
 } 
 
-function calcRemaining(){
-  var expenses = expensesPieChart.options.elements.center.text.slice(1);
-  var income = incomePieChart.options.elements.center.text.slice(1);
-  $("#Remaining").html(CURRENT_CURRENCY + (parseInt(income)-parseInt(expenses)).toString());
-  if(income-expenses < 0){
-    $("#Remaining").css("color", "red");
-  }
+function calcRemaining(expenses, income){
+    console.log(expenses);
+    console.log(income);
+    $("#Remaining").html(CURRENT_CURRENCY + (parseInt(income)-parseInt(expenses)).toString());
+    if(income-expenses < 0){
+      $("#Remaining").css("color", "red");
+    }
 }
